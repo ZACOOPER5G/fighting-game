@@ -17,6 +17,7 @@ class Sprite {
         this.position = position;
         this.velocity = velocity;
         this.height = 150;
+        this.lastKey;
     };
 
     draw() {
@@ -59,7 +60,28 @@ const enemy = new Sprite({
     }
 });
 
-// creates animations
+// player controlscontrols
+
+const keys = {
+    a: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    },
+    w: {
+        pressed: false
+    },
+    ArrowRight: {
+        pressed: false
+    },
+    ArrowLeft: {
+        pressed: false
+    },
+    ArrowUp: {
+        pressed: false
+    }
+};
 
 const animate = () => {
     window.requestAnimationFrame(animate);
@@ -67,22 +89,58 @@ const animate = () => {
     c.fillRect(0, 0, canvas.width, canvas.height);
     player.update();
     enemy.update();
+
+    player.velocity.x = 0;
+    enemy.velocity.x = 0;
+
+    if (keys.d.pressed && player.lastKey === 'd') {
+        player.velocity.x = 1;
+        player.lastKey = 'd';
+    } else if (keys.a.pressed && player.lastKey === 'a') {
+        player.velocity.x = -1;
+        player.lastKey = 'a';
+    } else if (keys.w.pressed && player.lastKey === 'w') {
+        player.velocity.y = -4;
+        player.lastKey = 'w';
+    };
+
+    if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
+        enemy.velocity.x = 1;
+        enemy.lastKey = 'ArrowRight';
+    } else if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
+        enemy.velocity.x = -1;
+        enemy.lastKey = 'ArrowLeft';
+    } else if (keys.ArrowUp.pressed && enemy.lastKey === 'ArrowUp') {
+        enemy.velocity.y = -4;
+        enemy.lastKey = 'ArrowUp';
+    };
 };
 
 animate();
 
-// player controlscontrols
-
 window.addEventListener('keydown', (e) => {
     switch(e.key) {
         case 'd':
-            player.velocity.x = 1
+            keys.d.pressed = true;
+            player.lastKey = 'd';
         break
         case 'a':
-            player.velocity.x = -1
+            keys.a.pressed = true;
+            player.lastKey = 'a';
         break
         case 'w':
-            player.velocity.y = -4
+           player.velocity.y = -4;
+        break
+        case 'ArrowRight':
+            keys.ArrowRight.pressed = true;
+            enemy.lastKey = 'ArrowRight';
+        break
+        case 'ArrowLeft':
+            keys.ArrowLeft.pressed = true;
+            enemy.lastKey = 'ArrowLeft';
+        break
+        case 'ArrowUp':
+           enemy.velocity.y = -4;
         break
     }
 
@@ -91,13 +149,22 @@ window.addEventListener('keydown', (e) => {
 window.addEventListener('keyup', (e) => {
     switch(e.key) {
         case 'd':
-            player.velocity.x = 0
+            keys.d.pressed = false;
         break
         case 'a':
-            player.velocity.x = 0
+            keys.a.pressed = false;
         break
         case 'w':
-            player.velocity.x = 0
+            keys.w.pressed = false;
+        break
+        case 'ArrowRight':
+            keys.ArrowRight.pressed = false;
+        break
+        case 'ArrowLeft':
+            keys.ArrowLeft.pressed = false;
+        break
+        case 'ArrowUp':
+            keys.ArrowUp.pressed = false;
         break
     }
 
