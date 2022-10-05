@@ -13,16 +13,28 @@ const gravity = 0.7;
 // creating sprite objects
 
 class Sprite {
-    constructor({ position, velocity }) {
+    constructor({ position, velocity, color = 'red'}) {
         this.position = position;
         this.velocity = velocity;
         this.height = 150;
+        this.width = 50;
         this.lastKey;
+        this.hitBox = {
+            position: this.position,
+            width: 100,
+            height: 50,
+        };
+        this.color = color;
     };
 
     draw() {
-        c.fillStyle = 'red';
-        c.fillRect(this.position.x, this.position.y, 50, this.height);
+        // playable character
+        c.fillStyle = this.color;
+        c.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+        // hit box
+        c.fillStyle = 'yellow';
+        c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height);
     };
 
     update() {
@@ -57,10 +69,11 @@ const enemy = new Sprite({
     velocity: {
         x: 0,
         y: 0,
-    }
+    },
+    color: 'blue'
 });
 
-// player controlscontrols
+// player & enemy controls
 
 const keys = {
     a: {
@@ -114,6 +127,11 @@ const animate = () => {
         enemy.velocity.y = -20;
         enemy.lastKey = 'ArrowUp';
     };
+
+    // detect for collison
+    if (player.hitBox.position.x + player.hitBox.width >= enemy.position.x && player.hitBox.position.x <= enemy.position.x + enemy.width && player.hitBox.position.y + player.hitBox.height >= enemy.position.y && player.hitBox.position.y <= enemy.position.y + enemy.height) {
+        console.log('direct hit')
+    }
 };
 
 animate();
