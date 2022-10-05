@@ -25,6 +25,7 @@ class Sprite {
             height: 50,
         };
         this.color = color;
+        this.isAttacking;
     };
 
     draw() {
@@ -48,6 +49,10 @@ class Sprite {
             this.velocity.y += gravity;
         }
     };
+
+    attack() {
+        
+    }
 };
 
 const player = new Sprite({
@@ -129,7 +134,14 @@ const animate = () => {
     };
 
     // detect for collison
-    if (player.hitBox.position.x + player.hitBox.width >= enemy.position.x && player.hitBox.position.x <= enemy.position.x + enemy.width && player.hitBox.position.y + player.hitBox.height >= enemy.position.y && player.hitBox.position.y <= enemy.position.y + enemy.height) {
+    if (
+            player.hitBox.position.x + player.hitBox.width >= enemy.position.x && 
+            player.hitBox.position.x <= enemy.position.x + enemy.width && 
+            player.hitBox.position.y + player.hitBox.height >= enemy.position.y &&
+            player.hitBox.position.y <= enemy.position.y + enemy.height &&
+            player.isAttacking
+
+        ) {
         console.log('direct hit')
     }
 };
