@@ -5,8 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    </style>
 </head>
-<canvas></canvas>
+<body>
+    <div style="position: relative; display: inline-block" >
+        <div style="position: absolute; width: 100%; display: flex; align-items: center; padding: 20px;" >
+            <!-- player health -->
+            <div id="playerHealth" style="background-color: yellow; height: 30px; width: 100%;" ></div>
+            <!-- timer -->
+            <div style="background-color: red; width: 100px; height: 100px; flex-shrink: 0;" ></div>
+            <!-- enemy health -->
+            <div id="enemyHealth" style="background-color: yellow; height: 30px; width: 100%;" ></div>
+        </div>
+        <canvas>
+        
+        </canvas>
+    </div>
+</body>
 <script src="index.js"></script>
 </html>
 
