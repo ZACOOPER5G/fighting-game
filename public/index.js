@@ -13,14 +13,18 @@ const gravity = 0.7;
 // creating sprite objects
 
 class Sprite {
-    constructor({ position, velocity, color = 'red'}) {
+    constructor({ position, velocity, color = 'red', offset }) {
         this.position = position;
         this.velocity = velocity;
         this.height = 150;
         this.width = 50;
         this.lastKey;
         this.hitBox = {
-            position: this.position,
+            position: {
+                x: this.position.x,
+                y: this.position.y
+            },
+            offset,
             width: 100,
             height: 50,
         };
@@ -43,6 +47,9 @@ class Sprite {
 
     update() {
         this.draw();
+        this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
+        this.hitBox.position.y = this.position.y;
+
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
@@ -70,6 +77,11 @@ const player = new Sprite({
         x: 0,
         y: 10,
     },
+    color: 'red',
+    offset: {
+        x: 0,
+        y: 0,
+    }
 });
 
 const enemy = new Sprite({
@@ -81,7 +93,11 @@ const enemy = new Sprite({
         x: 0,
         y: 0,
     },
-    color: 'blue'
+    color: 'blue',
+    offset: {
+        x: -50,
+        y: 0,
+    }
 });
 
 // player & enemy controls
@@ -106,6 +122,18 @@ const keys = {
         pressed: false
     }
 };
+
+const rectangularCollision = ({
+    rectangle1,
+    rectangle2,
+}) => {
+    return (
+        rectangle1.hitBox.position.x + rectangle1.hitBox.width >= rectangle2.position.x && 
+        rectangle1.hitBox.position.x <= rectangle2.position.x + rectangle2.width && 
+        rectangle1.hitBox.position.y + rectangle1.hitBox.height >= rectangle2.position.y &&
+        rectangle1.hitBox.position.y <= rectangle2.position.y + rectangle2.height
+    )
+}
 
 const animate = () => {
     window.requestAnimationFrame(animate);
@@ -141,15 +169,27 @@ const animate = () => {
 
     // detect for collison
     if (
-            player.hitBox.position.x + player.hitBox.width >= enemy.position.x && 
-            player.hitBox.position.x <= enemy.position.x + enemy.width && 
-            player.hitBox.position.y + player.hitBox.height >= enemy.position.y &&
-            player.hitBox.position.y <= enemy.position.y + enemy.height &&
-            player.isAttacking
+        rectangularCollision({
+            rectangle1: player,
+            rectangle2: enemy
+        }) &&
+        player.isAttacking
 
-        ) {
-            player.isAttacking = false;
-            console.log('direct hit')
+    ) {
+        player.isAttacking = false;
+        console.log('direct hit')
+    };
+
+    if (
+        rectangularCollision({
+            rectangle1: enemy,
+            rectangle2: player
+        }) &&
+        enemy.isAttacking
+
+    ) {
+        enemy.isAttacking = false;
+        console.log('enemy hit')
     }
 };
 
@@ -182,6 +222,9 @@ window.addEventListener('keydown', (e) => {
         case 'ArrowUp':
            enemy.velocity.y = -20;
         break
+        case 'Shift':
+            enemy.attack();
+         break
     }
 
 });
