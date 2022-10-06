@@ -34,8 +34,11 @@ class Sprite {
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
 
         // hit box
-        c.fillStyle = 'yellow';
-        c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height);
+        if (this.isAttacking) {
+            c.fillStyle = 'yellow';
+            c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height);
+        };
+
     };
 
     update() {
@@ -51,8 +54,11 @@ class Sprite {
     };
 
     attack() {
-        
-    }
+        this.isAttacking = true;
+        setTimeout(() => {
+            this.isAttacking = false;
+        }, 100);
+    };
 };
 
 const player = new Sprite({
@@ -142,7 +148,8 @@ const animate = () => {
             player.isAttacking
 
         ) {
-        console.log('direct hit')
+            player.isAttacking = false;
+            console.log('direct hit')
     }
 };
 
@@ -161,6 +168,9 @@ window.addEventListener('keydown', (e) => {
         case 'w':
            player.velocity.y = -20;
         break
+        case ' ':
+            player.attack();
+         break
         case 'ArrowRight':
             keys.ArrowRight.pressed = true;
             enemy.lastKey = 'ArrowRight';
