@@ -110,20 +110,27 @@ const animate = () => {
 
     // player movement
     player.framesMax = 4;
-    if (keys.d.pressed && player.lastKey === 'd') {
-        player.velocity.x = 4;
-        player.image = player.sprites.run.image
-        player.switchSprite('run')
-    } else if (keys.a.pressed && player.lastKey === 'a') {
-        player.velocity.x = -4;
-        player.switchSprite('run')
-    } else {
-        player.switchSprite('idle')
-    };
+
 
     if (player.position.y < 270) {
         player.switchSprite('jump')
-    };
+        if (keys.d.pressed && player.lastKey === 'd') {
+            player.velocity.x = 4;
+        } else if (keys.a.pressed && player.lastKey === 'a') {
+            player.velocity.x = -4;
+        }
+    } else {
+        if (keys.d.pressed && player.lastKey === 'd') {
+            player.velocity.x = 4;
+            player.image = player.sprites.run.image
+            player.switchSprite('run')
+        } else if (keys.a.pressed && player.lastKey === 'a') {
+            player.velocity.x = -4;
+            player.switchSprite('run')
+        } else {
+            player.switchSprite('idle')
+        };
+    }
 
     if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 4;
