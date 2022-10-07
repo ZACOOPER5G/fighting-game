@@ -12,6 +12,14 @@ const gravity = 0.7;
 
 // creating sprite objects
 
+const background = new Sprite ({
+    position: {
+        x: 0,
+        y: 0,
+    },
+    imgSrc: '../assets/background.jpg'
+})
+
 const player = new Fighter({
     position: {
         x: 0,
@@ -111,9 +119,9 @@ const animate = () => {
     window.requestAnimationFrame(animate);
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
+    background.update();
     player.update();
     enemy.update();
-
     player.velocity.x = 0;
     enemy.velocity.x = 0;
 
