@@ -41,7 +41,15 @@ class Sprite {
 };
 
 class Fighter extends Sprite {
-    constructor({ position, velocity, color = 'red', imgSrc, scale = 1, framesMax = 1, offset = {x: 0, y: 0} }) {
+    constructor({ 
+        position, 
+        velocity, 
+        color = 'red', 
+        imgSrc, scale = 1, 
+        framesMax = 1, 
+        offset = {x: 0, y: 0},
+        sprites
+    }) {
         super ({
             position,
             imgSrc, 
@@ -68,11 +76,16 @@ class Fighter extends Sprite {
         this.framesCurrent = 0;
         this.framesElapsed = 0;
         this.framesHold = 8;
+        this.sprites = sprites
+        for (const sprite in this.sprites) {
+            sprites[sprite].image = new Image();
+            sprites[sprite].image.src = sprites[sprite].imgSrc
+        }
     };
 
     update() {
-        c.fillStyle = 'red'
-        c.fillRect(this.position.x, this.position.y, 50, 150)
+        // c.fillStyle = 'red'
+        // c.fillRect(this.position.x, this.position.y, 50, 150)
         this.draw();
         this.animateFrames();
         this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
@@ -94,4 +107,27 @@ class Fighter extends Sprite {
             this.isAttacking = false;
         }, 100);
     };
+
+    switchSprite(sprite) {
+        switch (sprite) {
+            case "idle":
+                if (this.image !== this.sprites.idle.image)
+                this.image = this.sprites.idle.image
+                this.framesMax = this.sprites.idle.framesMax
+                this.framesHold = 8;
+            break;
+            case "run":
+                if (this.image !== this.sprites.run.image)
+                this.image = this.sprites.run.image
+                this.framesMax = this.sprites.run.framesMax
+                this.framesHold = 8;
+            break;
+            case "jump":
+                if (this.image !== this.sprites.jump.image)
+                this.image = this.sprites.jump.image
+                this.framesMax = this.sprites.jump.framesMax
+                this.framesHold = 15;
+            break;
+        }
+    }
 };

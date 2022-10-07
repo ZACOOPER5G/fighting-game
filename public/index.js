@@ -36,6 +36,20 @@ const player = new Fighter({
     offset: {
         x: 95,
         y: 65,
+    },
+    sprites: {
+        idle: {
+            imgSrc: '../assets/naruto-idle.png',
+            framesMax: 4,
+        },
+        run: {
+            imgSrc: '../assets/naruto-run.png',
+            framesMax: 6,
+        },
+        jump: {
+            imgSrc: '../assets/naruto-jump.png',
+            framesMax: 4,
+        },
     }
 });
 
@@ -90,16 +104,21 @@ const animate = () => {
     player.velocity.x = 0;
     enemy.velocity.x = 0;
 
+    // player movement
+    player.switchSprite('idle')
+    player.framesMax = 4;
     if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 4;
-        player.lastKey = 'd';
+        player.image = player.sprites.run.image
+        player.switchSprite('run')
     } else if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -4;
-        player.lastKey = 'a';
-    } else if (keys.w.pressed && player.lastKey === 'w') {
-        player.velocity.y = -5;
-        player.lastKey = 'w';
-    };
+        player.switchSprite('run')
+    } 
+
+    if (player.velocity.y < 0) {
+        player.switchSprite('jump')
+    }
 
     if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 4;
