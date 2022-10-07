@@ -22,7 +22,7 @@ const background = new Sprite ({
 
 const player = new Fighter({
     position: {
-        x: 0,
+        x: 80,
         y: 0,
     },
     velocity: {
@@ -38,7 +38,7 @@ const player = new Fighter({
 
 const enemy = new Fighter({
     position: {
-        x: 400,
+        x: 900,
         y: 100,
     },
     velocity: {
@@ -75,44 +75,6 @@ const keys = {
     }
 };
 
-// collision detector function
-
-const rectangularCollision = ({
-    rectangle1,
-    rectangle2,
-}) => {
-    return (
-        rectangle1.hitBox.position.x + rectangle1.hitBox.width >= rectangle2.position.x && 
-        rectangle1.hitBox.position.x <= rectangle2.position.x + rectangle2.width && 
-        rectangle1.hitBox.position.y + rectangle1.hitBox.height >= rectangle2.position.y &&
-        rectangle1.hitBox.position.y <= rectangle2.position.y + rectangle2.height
-    )
-};
-
-// timer funtion and end game function
-
-let timer = 45;
-const decreaseTimer = () => {
-    setTimeout(decreaseTimer, 1000)
-    if (timer > 0) {
-        timer--
-        document.querySelector('#timer').innerHTML = timer
-    } else timer = 0;
-
-    if (player.health === enemy.health && timer === 0) {
-        document.querySelector('#result').style.display = 'flex'
-        document.querySelector('#result').innerHTML = 'Draw'
-    } else if (player.health > enemy.health && timer === 0 || enemy.health <= 0) {
-        document.querySelector('#result').style.display = 'flex'
-        document.querySelector('#result').innerHTML = 'Player 1 Wins'
-        timer = 0;
-    } else if (player.health < enemy.health && timer === 0 || player.health <= 0) {
-        document.querySelector('#result').style.display = 'flex'
-        document.querySelector('#result').innerHTML = 'Player 2 Wins'
-        timer = 0;
-    };
-};
-
 decreaseTimer();
 
 const animate = () => {
@@ -132,7 +94,7 @@ const animate = () => {
         player.velocity.x = -4;
         player.lastKey = 'a';
     } else if (keys.w.pressed && player.lastKey === 'w') {
-        player.velocity.y = -20;
+        player.velocity.y = -5;
         player.lastKey = 'w';
     };
 
@@ -143,7 +105,7 @@ const animate = () => {
         enemy.velocity.x = -4;
         enemy.lastKey = 'ArrowLeft';
     } else if (keys.ArrowUp.pressed && enemy.lastKey === 'ArrowUp') {
-        enemy.velocity.y = -20;
+        enemy.velocity.y = -5;
         enemy.lastKey = 'ArrowUp';
     };
 
@@ -188,7 +150,7 @@ window.addEventListener('keydown', (e) => {
             player.lastKey = 'a';
         break
         case 'w':
-           player.velocity.y = -20;
+           player.velocity.y = -15;
         break
         case ' ':
             player.attack();
@@ -202,7 +164,7 @@ window.addEventListener('keydown', (e) => {
             enemy.lastKey = 'ArrowLeft';
         break
         case 'ArrowUp':
-           enemy.velocity.y = -20;
+           enemy.velocity.y = -15;
         break
         case 'Shift':
             enemy.attack();
