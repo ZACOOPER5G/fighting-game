@@ -114,11 +114,11 @@ const animate = () => {
     } else if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -4;
         player.switchSprite('run')
-    } 
+    };
 
-    if (player.velocity.y < 0) {
+    if (player.position.y < 270) {
         player.switchSprite('jump')
-    }
+    };
 
     if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 4;
