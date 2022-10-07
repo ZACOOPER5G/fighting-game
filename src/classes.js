@@ -1,24 +1,48 @@
 class Sprite {
-    constructor({ position, imgSrc }) {
+    constructor({ position, imgSrc, scale = 1, framesMax = 1 }) {
         this.position = position;
         this.height = 150;
         this.width = 50;
         this.image = new Image();
         this.image.src = imgSrc;
+        this.scale = scale;
+        this.framesMax = framesMax;
+        this.framesCurrent = 0;
+        this.framseElapsed = 0;
+        this.framesHold = 5;
     };
 
     draw() {
-        c.drawImage(this.image, this. position.x, this.position.y)
+        c.drawImage(
+            this.image,
+            this.framesCurrent * (this.image.width / this.framesMax),
+            0,
+            this.image.width / this.framesMax,
+            this.image.height,
+            this.position.x, 
+            this.position.y,
+            (this.image.width / this.framesMax) * this.scale,
+            this.image.height * this.scale,
+        )
     };
 
     update() {
         this.draw();
+        this.framesElapsed++;
+        if (this.framesElapsed % this.framesHold === 0) {
+            this.framesCurrent < this.framesMax - 1 ? this.framesCurrent++ : this.framesCurrent = 0;
+        }
     };
 };
 
-class Fighter {
-    constructor({ position, velocity, color = 'red', offset }) {
-        this.position = position;
+class Fighter extends Sprite {
+    constructor({ position, velocity, color = 'red', offset, imgSrc, scale = 1, framesMax = 1, framesHold }) {
+        super ({
+            position,
+            imgSrc, 
+            scale, 
+            framesMax,
+        });
         this.velocity = velocity;
         this.height = 150;
         this.width = 50;
@@ -35,19 +59,9 @@ class Fighter {
         this.color = color;
         this.isAttacking;
         this.health = 100;
-    };
-
-    draw() {
-        // playable character
-        c.fillStyle = this.color;
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
-
-        // hit box
-        if (this.isAttacking) {
-            c.fillStyle = 'yellow';
-            c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height);
-        };
-
+        this.framesCurrent = 0;
+        this.framseElapsed = 0;
+        this.framesHold = 5;
     };
 
     update() {
