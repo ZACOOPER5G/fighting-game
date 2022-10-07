@@ -30,9 +30,12 @@ const player = new Fighter({
         y: 10,
     },
     color: 'red',
+    imgSrc: '../assets/naruto-idle.png',
+    framesMax: 4,
+    scale: 2.5,
     offset: {
-        x: 0,
-        y: 0,
+        x: 95,
+        y: 65,
     }
 });
 
@@ -83,7 +86,7 @@ const animate = () => {
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.update();
     player.update();
-    enemy.update();
+    // enemy.update();
     player.velocity.x = 0;
     enemy.velocity.x = 0;
 

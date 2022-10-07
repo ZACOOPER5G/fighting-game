@@ -1,5 +1,5 @@
 class Sprite {
-    constructor({ position, imgSrc, scale = 1, framesMax = 1 }) {
+    constructor({ position, imgSrc, scale = 1, framesMax = 1, offset = {x: 0, y: 0} }) {
         this.position = position;
         this.height = 150;
         this.width = 50;
@@ -8,8 +8,9 @@ class Sprite {
         this.scale = scale;
         this.framesMax = framesMax;
         this.framesCurrent = 0;
-        this.framseElapsed = 0;
-        this.framesHold = 5;
+        this.framesElapsed = 0;
+        this.framesHold = 1;
+        this.offset = offset;
     };
 
     draw() {
@@ -19,29 +20,34 @@ class Sprite {
             0,
             this.image.width / this.framesMax,
             this.image.height,
-            this.position.x, 
-            this.position.y,
+            this.position.x - this.offset.x,
+            this.position.y - this.offset.y,
             (this.image.width / this.framesMax) * this.scale,
             this.image.height * this.scale,
         )
     };
 
-    update() {
-        this.draw();
+    animateFrames() {
         this.framesElapsed++;
         if (this.framesElapsed % this.framesHold === 0) {
             this.framesCurrent < this.framesMax - 1 ? this.framesCurrent++ : this.framesCurrent = 0;
         }
+    }
+
+    update() {
+        this.draw();
+        this.animateFrames();
     };
 };
 
 class Fighter extends Sprite {
-    constructor({ position, velocity, color = 'red', offset, imgSrc, scale = 1, framesMax = 1, framesHold }) {
+    constructor({ position, velocity, color = 'red', imgSrc, scale = 1, framesMax = 1, offset = {x: 0, y: 0} }) {
         super ({
             position,
             imgSrc, 
             scale, 
             framesMax,
+            offset,
         });
         this.velocity = velocity;
         this.height = 150;
@@ -60,12 +66,15 @@ class Fighter extends Sprite {
         this.isAttacking;
         this.health = 100;
         this.framesCurrent = 0;
-        this.framseElapsed = 0;
-        this.framesHold = 5;
+        this.framesElapsed = 0;
+        this.framesHold = 8;
     };
 
     update() {
+        c.fillStyle = 'red'
+        c.fillRect(this.position.x, this.position.y, 50, 150)
         this.draw();
+        this.animateFrames();
         this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
         this.hitBox.position.y = this.position.y;
 
