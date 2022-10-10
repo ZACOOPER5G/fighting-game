@@ -54,6 +54,10 @@ const player = new Fighter({
             imgSrc: '../assets/naruto-jump.png',
             framesMax: 4,
         },
+        attack1: {
+            imgSrc: '../assets/attack1.png',
+            framesMax: 6,
+        }
     }
 });
 
@@ -109,14 +113,12 @@ const animate = () => {
     enemy.velocity.x = 0;
 
     // player movement
-    player.framesMax = 4;
-
-
     if (player.position.y < 270) {
         player.switchSprite('jump')
         if (keys.d.pressed && player.lastKey === 'd') {
             player.velocity.x = 4;
-        } else if (keys.a.pressed && player.lastKey === 'a') {
+        }
+        if (keys.a.pressed && player.lastKey === 'a') {
             player.velocity.x = -4;
         }
     } else {
