@@ -33,8 +33,8 @@ const player = new Fighter({
     framesMax: 4,
     scale: 2.5,
     offset: {
-        x: 95,
-        y: 65,
+        x: 0,
+        y: 0,
     },
     sprites: {
         idle: {
@@ -47,13 +47,22 @@ const player = new Fighter({
         },
         jump: {
             imgSrc: '../assets/naruto/naruto-jump.png',
-            framesMax: 4,
+            framesMax: 3,
         },
         attack1: {
             imgSrc: '../assets/naruto/attack1.png',
-            framesMax: 6,
+            framesMax: 5,
+            framesHold: 8,
         }
-    }
+    },
+    hitBox: {
+        offset: {
+            x: 100,
+            y: 0,
+        },
+        width: 100,
+        height: 50,
+    },
 });
 
 const enemy = new Fighter({
@@ -92,9 +101,17 @@ const enemy = new Fighter({
         },
         attack1: {
             imgSrc: '../assets/sasuke/attack1-left.png',
-            framesMax: 4,
+            framesMax: 7,
         }
-    }
+    },
+    hitBox: {
+        offset: {
+            x: -130,
+            y: 0,
+        },
+        width: 100,
+        height: 50,
+    },
 });
 
 // player & enemy controls

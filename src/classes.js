@@ -48,7 +48,8 @@ class Fighter extends Sprite {
         imgSrc, scale = 1, 
         framesMax = 1, 
         offset = {x: 0, y: 0},
-        sprites
+        sprites,
+        hitBox = { offset: {}, width: undefined, height: undefined}
     }) {
         super ({
             position,
@@ -66,9 +67,9 @@ class Fighter extends Sprite {
                 x: this.position.x,
                 y: this.position.y,
             },
-            offset,
-            width: 100,
-            height: 50,
+            offset: hitBox.offset,
+            width: hitBox.width,
+            height: hitBox.height,
         };
         this.color = color;
         this.isAttacking;
@@ -88,6 +89,8 @@ class Fighter extends Sprite {
         // c.fillRect(this.position.x, this.position.y, 50, 150)
         this.draw();
         this.animateFrames();
+
+        c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height)
         this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
         this.hitBox.position.y = this.position.y;
 
@@ -138,7 +141,7 @@ class Fighter extends Sprite {
             case "attack1":
                 if (this.image !== this.sprites.attack1.image)
                 this.framesCurrent = 0;
-                this.framesHold = 6;
+                this.framesHold = this.sprites.attack1.framesHold;
                 this.image = this.sprites.attack1.image;
                 this.framesMax = this.sprites.attack1.framesMax;
             break;
