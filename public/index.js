@@ -29,8 +29,7 @@ const player = new Fighter({
         x: 0,
         y: 10,
     },
-    color: 'red',
-    imgSrc: '../assets/naruto-idle.png',
+    imgSrc: '../assets/naruto/naruto-idle.png',
     framesMax: 4,
     scale: 2.5,
     offset: {
@@ -39,23 +38,19 @@ const player = new Fighter({
     },
     sprites: {
         idle: {
-            imgSrc: '../assets/naruto-idle.png',
+            imgSrc: '../assets/naruto/naruto-idle.png',
             framesMax: 4,
         },
         run: {
-            imgSrc: '../assets/naruto-run.png',
+            imgSrc: '../assets/naruto/naruto-run.png',
             framesMax: 6,
         },
         jump: {
-            imgSrc: '../assets/naruto-jump.png',
-            framesMax: 4,
-        },
-        fall: {
-            imgSrc: '../assets/naruto-jump.png',
+            imgSrc: '../assets/naruto/naruto-jump.png',
             framesMax: 4,
         },
         attack1: {
-            imgSrc: '../assets/attack1.png',
+            imgSrc: '../assets/naruto/attack1.png',
             framesMax: 6,
         }
     }
@@ -74,6 +69,31 @@ const enemy = new Fighter({
     offset: {
         x: -50,
         y: 0,
+    },
+    imgSrc: '../assets/sasuke/sasuke-idle-left.png',
+    framesMax: 4,
+    scale: 2.5,
+    offset: {
+        x: 95,
+        y: 65,
+    },
+    sprites: {
+        idle: {
+            imgSrc: '../assets/sasuke/sasuke-idle-left.png',
+            framesMax: 4,
+        },
+        run: {
+            imgSrc: '../assets/sasuke/sasuke-run-left.png',
+            framesMax: 6,
+        },
+        jump: {
+            imgSrc: '../assets/sasuke/sasuke-jump-left.png',
+            framesMax: 4,
+        },
+        attack1: {
+            imgSrc: '../assets/sasuke/attack1-left.png',
+            framesMax: 4,
+        }
     }
 });
 
@@ -108,7 +128,7 @@ const animate = () => {
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.update();
     player.update();
-    // enemy.update();
+    enemy.update();
     player.velocity.x = 0;
     enemy.velocity.x = 0;
 
@@ -124,7 +144,6 @@ const animate = () => {
     } else {
         if (keys.d.pressed && player.lastKey === 'd') {
             player.velocity.x = 4;
-            player.image = player.sprites.run.image
             player.switchSprite('run')
         } else if (keys.a.pressed && player.lastKey === 'a') {
             player.velocity.x = -4;
@@ -132,17 +151,26 @@ const animate = () => {
         } else {
             player.switchSprite('idle')
         };
-    }
+    };
 
-    if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
-        enemy.velocity.x = 4;
-        enemy.lastKey = 'ArrowRight';
-    } else if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
-        enemy.velocity.x = -4;
-        enemy.lastKey = 'ArrowLeft';
-    } else if (keys.ArrowUp.pressed && enemy.lastKey === 'ArrowUp') {
-        enemy.velocity.y = -5;
-        enemy.lastKey = 'ArrowUp';
+    if (enemy.position.y < 270) {
+        enemy.switchSprite('jump')
+        if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
+            enemy.velocity.x = 4;
+        }
+        if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
+            enemy.velocity.x = -4;
+        }
+    } else {
+        if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
+            enemy.velocity.x = 4;
+            enemy.switchSprite('run')
+        } else if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
+            enemy.velocity.x = -4;
+            enemy.switchSprite('run')
+        } else {
+            enemy.switchSprite('idle')
+        };
     };
 
     // detect for collison
