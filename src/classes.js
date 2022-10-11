@@ -82,6 +82,7 @@ class Fighter extends Sprite {
         for (const sprite in this.sprites) {
             sprites[sprite].image = new Image();
             sprites[sprite].image.src = sprites[sprite].imgSrc
+            console.log(sprites)
         }
     };
 
@@ -92,8 +93,17 @@ class Fighter extends Sprite {
         this.animateFrames();
 
         c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height)
-        this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
-        this.hitBox.position.y = this.position.y;
+        if (this.lastKey === 'd') {
+            this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
+            this.hitBox.position.y = this.position.y;
+        } else if (this.lastKey === 'a') {
+            this.hitBox.position.x = this.position.x - this.hitBox.offset.x + this.width + 18;
+            this.hitBox.position.y = this.position.y;
+        } else {
+            this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
+            this.hitBox.position.y = this.position.y;
+        }
+
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
@@ -108,11 +118,14 @@ class Fighter extends Sprite {
     };
 
     attack() {
-        if (this.lastUpKey === 'd')
-        this.switchSprite('attack1')
-        else if (this.lastUpKey === 'a') 
-        this.switchSprite('attack1Left')
-        else this.switchSprite('attack1')
+        if (this.lastKey === 'a') {
+            this.switchSprite('attack1Left')
+        }
+        else if (this.lastKey === 'd') {
+            this.switchSprite('attack1')
+        } else {
+            this.switchSprite('attack1')
+        }
         this.isAttacking = true;
         setTimeout(() => {
             this.isAttacking = false;
@@ -120,7 +133,14 @@ class Fighter extends Sprite {
     };
 
     switchSprite(sprite) {
-        if (this.image === this.sprites.attack1.image && this.framesCurrent < this.sprites.attack1.framesMax - 1) return
+        if ( 
+                this.image === this.sprites.attack1Left.image && this.framesCurrent < this.sprites.attack1Left.framesMax - 1 
+            ) return
+        
+        if ( 
+                this.image === this.sprites.attack1.image && this.framesCurrent < this.sprites.attack1.framesMax - 1 
+            ) return
+
         switch (sprite) {
             case "idle":
                 if (this.image !== this.sprites.idle.image)
@@ -173,10 +193,10 @@ class Fighter extends Sprite {
             break;
             case "attack1Left":
                 if (this.image !== this.sprites.attack1Left.image)
+                this.image = this.sprites.attack1Left.image;
                 this.framesCurrent = 0;
                 this.framesHold = this.sprites.attack1Left.framesHold;
-                this.image = this.sprites.attack1Left.image;
-                this.framesMax = this.sprites.attack1Left.framesMax;
+                this.framesMax = this.sprites.attack1.framesMax;
             break;
         }
     }

@@ -61,16 +61,16 @@ const player = new Fighter({
             imgSrc: '../assets/naruto/naruto-jump-left.png',
             framesMax: 3,
         },
+        attack1Left: {
+            imgSrc: '../assets/naruto/attack1-left.png',
+            framesMax: 5,
+            framesHold: 8,
+        },
         attack1: {
             imgSrc: '../assets/naruto/attack1.png',
             framesMax: 5,
             framesHold: 8,
         },
-        attack1Left: {
-            imgSrc: '../assets/naruto/attack1-left.png',
-            framesMax: 5,
-            framesHold: 8,
-        }
     },
     hitBox: {
         offset: {
@@ -119,7 +119,12 @@ const enemy = new Fighter({
         attack1: {
             imgSrc: '../assets/sasuke/attack1-left.png',
             framesMax: 7,
-        }
+        },
+        attack1Left: {
+            imgSrc: '../assets/naruto/attack1-left.png',
+            framesMax: 5,
+            framesHold: 8,
+        },
     },
     hitBox: {
         offset: {
