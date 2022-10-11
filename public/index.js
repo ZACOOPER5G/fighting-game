@@ -41,16 +41,33 @@ const player = new Fighter({
             imgSrc: '../assets/naruto/naruto-idle.png',
             framesMax: 4,
         },
+        idleLeft: {
+            imgSrc: '../assets/naruto/naruto-idle-left.png',
+            framesMax: 4,
+        },
         run: {
             imgSrc: '../assets/naruto/naruto-run.png',
+            framesMax: 6,
+        },
+        runLeft: {
+            imgSrc: '../assets/naruto/naruto-run-left.png',
             framesMax: 6,
         },
         jump: {
             imgSrc: '../assets/naruto/naruto-jump.png',
             framesMax: 3,
         },
+        jumpLeft: {
+            imgSrc: '../assets/naruto/naruto-jump-left.png',
+            framesMax: 3,
+        },
         attack1: {
             imgSrc: '../assets/naruto/attack1.png',
+            framesMax: 5,
+            framesHold: 8,
+        },
+        attack1Left: {
+            imgSrc: '../assets/naruto/attack1-left.png',
             framesMax: 5,
             framesHold: 8,
         }
@@ -145,12 +162,20 @@ const animate = () => {
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.update();
     player.update();
-    enemy.update();
+    // enemy.update();
     player.velocity.x = 0;
     enemy.velocity.x = 0;
 
     // player movement
-    if (player.position.y < 270) {
+    if (player.position.y < 270 && player.lastKey === 'a') {
+        player.switchSprite('jumpLeft')
+        if (keys.d.pressed && player.lastKey === 'd') {
+            player.velocity.x = 4;
+        }
+        if (keys.a.pressed && player.lastKey === 'a') {
+            player.velocity.x = -4;
+        }
+    } else if (player.position.y < 270) {
         player.switchSprite('jump')
         if (keys.d.pressed && player.lastKey === 'd') {
             player.velocity.x = 4;
@@ -164,8 +189,13 @@ const animate = () => {
             player.switchSprite('run')
         } else if (keys.a.pressed && player.lastKey === 'a') {
             player.velocity.x = -4;
-            player.switchSprite('run')
+            player.switchSprite('runLeft')
         } else {
+            if (player.lastUpKey === 'a')
+            player.switchSprite('idleLeft')
+            else if (player.lastUpKey === 'd')
+            player.switchSprite('idle')
+            else if (!player.lastUpKey)
             player.switchSprite('idle')
         };
     };
@@ -231,7 +261,7 @@ window.addEventListener('keydown', (e) => {
             player.lastKey = 'a';
         break
         case 'w':
-           player.velocity.y = -15;
+            player.velocity.y = -15;
         break
         case ' ':
             player.attack();
@@ -245,7 +275,7 @@ window.addEventListener('keydown', (e) => {
             enemy.lastKey = 'ArrowLeft';
         break
         case 'ArrowUp':
-           enemy.velocity.y = -15;
+            enemy.velocity.y = -15;
         break
         case 'Shift':
             enemy.attack();
@@ -258,21 +288,19 @@ window.addEventListener('keyup', (e) => {
     switch(e.key) {
         case 'd':
             keys.d.pressed = false;
+            !player.lastKey
+            player.lastUpKey = 'd'
         break
         case 'a':
             keys.a.pressed = false;
-        break
-        case 'w':
-            keys.w.pressed = false;
+            !player.lastKey
+            player.lastUpKey = 'a'
         break
         case 'ArrowRight':
             keys.ArrowRight.pressed = false;
         break
         case 'ArrowLeft':
             keys.ArrowLeft.pressed = false;
-        break
-        case 'ArrowUp':
-            keys.ArrowUp.pressed = false;
         break
     }
 

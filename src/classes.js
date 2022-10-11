@@ -62,6 +62,7 @@ class Fighter extends Sprite {
         this.height = 150;
         this.width = 50;
         this.lastKey;
+        this.lastUpKey;
         this.hitBox = {
             position: {
                 x: this.position.x,
@@ -107,7 +108,11 @@ class Fighter extends Sprite {
     };
 
     attack() {
+        if (this.lastUpKey === 'd')
         this.switchSprite('attack1')
+        else if (this.lastUpKey === 'a') 
+        this.switchSprite('attack1Left')
+        else this.switchSprite('attack1')
         this.isAttacking = true;
         setTimeout(() => {
             this.isAttacking = false;
@@ -144,6 +149,34 @@ class Fighter extends Sprite {
                 this.framesHold = this.sprites.attack1.framesHold;
                 this.image = this.sprites.attack1.image;
                 this.framesMax = this.sprites.attack1.framesMax;
+            break;
+            case "idleLeft":
+                if (this.image !== this.sprites.idleLeft.image)
+                this.framesCurrent = 0;
+                this.framesHold = 8;
+                this.image = this.sprites.idleLeft.image;
+                this.framesMax = this.sprites.idleLeft.framesMax;
+            break;
+            case "runLeft":
+                if (this.image !== this.sprites.runLeft.image)
+                this.framesCurrent = 0;
+                this.framesHold = 8;
+                this.image = this.sprites.runLeft.image;
+                this.framesMax = this.sprites.runLeft.framesMax;
+            break;
+            case "jumpLeft":
+                if (this.image !== this.sprites.jumpLeft.image)
+                this.framesCurrent = 0;
+                this.framesHold = 14;
+                this.image = this.sprites.jumpLeft.image;
+                this.framesMax = this.sprites.jumpLeft.framesMax;
+            break;
+            case "attack1Left":
+                if (this.image !== this.sprites.attack1Left.image)
+                this.framesCurrent = 0;
+                this.framesHold = this.sprites.attack1Left.framesHold;
+                this.image = this.sprites.attack1Left.image;
+                this.framesMax = this.sprites.attack1Left.framesMax;
             break;
         }
     }
