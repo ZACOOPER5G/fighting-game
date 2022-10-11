@@ -33,25 +33,41 @@ const player = new Fighter({
     framesMax: 4,
     scale: 2.5,
     offset: {
-        x: 0,
+        x: -150,
         y: 0,
     },
     sprites: {
         idle: {
             imgSrc: '../assets/naruto/naruto-idle.png',
             framesMax: 4,
+            offset: {
+                x: -150,
+                y: 0,
+            },
         },
         idleLeft: {
             imgSrc: '../assets/naruto/naruto-idle-left.png',
             framesMax: 4,
+            offset: {
+                x: 0,
+                y: 0,
+            },
         },
         run: {
             imgSrc: '../assets/naruto/naruto-run.png',
             framesMax: 6,
+            offset: {
+                x: 0,
+                y: 0,
+            }
         },
         runLeft: {
             imgSrc: '../assets/naruto/naruto-run-left.png',
             framesMax: 6,
+            offset: {
+                x: 0,
+                y: 0,
+            }
         },
         jump: {
             imgSrc: '../assets/naruto/naruto-jump.png',
@@ -65,11 +81,19 @@ const player = new Fighter({
             imgSrc: '../assets/naruto/attack1-left.png',
             framesMax: 5,
             framesHold: 8,
+            offset: {
+                x: 0,
+                y: 0,
+            }
         },
         attack1: {
             imgSrc: '../assets/naruto/attack1.png',
             framesMax: 5,
             framesHold: 8,
+            offset: {
+                x: 0,
+                y: 0,
+            }
         },
     },
     hitBox: {
@@ -100,35 +124,72 @@ const enemy = new Fighter({
     framesMax: 4,
     scale: 2.5,
     offset: {
-        x: 95,
-        y: 65,
+        x: 80,
+        y: 0,
     },
     sprites: {
-        idle: {
+        idleLeft: {
             imgSrc: '../assets/sasuke/sasuke-idle-left.png',
-            framesMax: 4,
+            framesMax: 6,
+            offset: {
+                x: 80,
+                y: 0,
+            },
         },
-        run: {
+        idle: {
+            imgSrc: '../assets/sasuke/sasuke-idle.png',
+            framesMax: 6,
+            offset: {
+                x: 80,
+                y: 0,
+            },
+        },
+        runLeft: {
             imgSrc: '../assets/sasuke/sasuke-run-left.png',
             framesMax: 6,
+            offset: {
+                x: 0,
+                y: -20,
+            }
+        },
+        run: {
+            imgSrc: '../assets/sasuke/sasuke-run.png',
+            framesMax: 6,
+            offset: {
+                x: 0,
+                y: -20,
+            }
+        },
+        jumpLeft: {
+            imgSrc: '../assets/sasuke/sasuke-jump-left.png',
+            framesMax: 3,
         },
         jump: {
-            imgSrc: '../assets/sasuke/sasuke-jump-left.png',
-            framesMax: 4,
+            imgSrc: '../assets/sasuke/sasuke-jump.png',
+            framesMax: 3,
         },
         attack1: {
-            imgSrc: '../assets/sasuke/attack1-left.png',
-            framesMax: 7,
+            imgSrc: '../assets/sasuke/attack1.png',
+            framesMax: 4,
+            framesHold: 8,
+            offset: {
+                x: 0,
+                y: 0,
+            }
         },
         attack1Left: {
-            imgSrc: '../assets/naruto/attack1-left.png',
-            framesMax: 5,
+            imgSrc: '../assets/sasuke/attack1-left.png',
+            framesMax: 4,
             framesHold: 8,
+            offset: {
+                x: 140,
+                y: 0,
+            }
         },
     },
     hitBox: {
         offset: {
-            x: -130,
+            x: -135,
             y: 0,
         },
         width: 100,
@@ -167,7 +228,7 @@ const animate = () => {
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.update();
     player.update();
-    // enemy.update();
+    enemy.update();
     player.velocity.x = 0;
     enemy.velocity.x = 0;
 
@@ -205,8 +266,16 @@ const animate = () => {
         };
     };
 
-    if (enemy.position.y < 270) {
+    if (enemy.position.y < 270 && enemy.lastKey === 'ArrowRight') {
         enemy.switchSprite('jump')
+        if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
+            enemy.velocity.x = 4;
+        }
+        if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
+            enemy.velocity.x = -4;
+        }
+    } else if (enemy.position.y < 270) {
+        enemy.switchSprite('jumpLeft')
         if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
             enemy.velocity.x = 4;
         }
@@ -219,9 +288,15 @@ const animate = () => {
             enemy.switchSprite('run')
         } else if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
             enemy.velocity.x = -4;
-            enemy.switchSprite('run')
+            enemy.switchSprite('runLeft')
         } else {
+            if (enemy.lastUpKey === 'ArrowLeft')
+            enemy.switchSprite('idleLeft')
+            else if (enemy.lastUpKey === 'ArrowRight')
             enemy.switchSprite('idle')
+            else if (!enemy.lastUpKey)
+            enemy.switchSprite('idleLeft')
+            enemy.offset.y = 0;
         };
     };
 
@@ -269,7 +344,7 @@ window.addEventListener('keydown', (e) => {
             player.velocity.y = -15;
         break
         case ' ':
-            player.attack();
+            player.playerAttack();
          break
         case 'ArrowRight':
             keys.ArrowRight.pressed = true;
@@ -283,7 +358,7 @@ window.addEventListener('keydown', (e) => {
             enemy.velocity.y = -15;
         break
         case 'Shift':
-            enemy.attack();
+            enemy.enemyAttack();
          break
     }
 
@@ -303,10 +378,15 @@ window.addEventListener('keyup', (e) => {
         break
         case 'ArrowRight':
             keys.ArrowRight.pressed = false;
+            !enemy.lastKey
+            enemy.lastUpKey = 'ArrowRight'
         break
         case 'ArrowLeft':
             keys.ArrowLeft.pressed = false;
+            !enemy.lastKey
+            enemy.lastUpKey = 'ArrowLeft'
         break
     }
 
 });
+
