@@ -87,13 +87,12 @@ class Fighter extends Sprite {
     };
 
     update() {
-        c.fillStyle = 'red'
-        c.fillRect(this.position.x, this.position.y, 50, 150)
+        // c.fillStyle = 'red'
+        // c.fillRect(this.position.x, this.position.y, 50, 150)
         this.draw();
         this.animateFrames();
-        console.log(enemy.lastKey)
 
-        c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height);
+        // c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height);
         if (this.lastKey === 'd') {
             this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
             this.hitBox.position.y = this.position.y;
@@ -162,6 +161,7 @@ class Fighter extends Sprite {
                 this.image = this.sprites.idle.image;
                 this.framesMax = this.sprites.idle.framesMax;
                 this.offset.x = this.sprites.idle.offset.x;
+                this.offset.y = this.sprites.idle.offset.y
             break;
             case "run":
                 if (this.image === this.sprites.attack1Left) {
@@ -198,6 +198,7 @@ class Fighter extends Sprite {
                 this.framesMax = this.sprites.idleLeft.framesMax;
                 this.offset.x = this.offset.x;
                 this.offset.x = this.sprites.idleLeft.offset.x;
+                this.offset.y = this.sprites.idleLeft.offset.y
             break;
             case "runLeft":
                 if (this.image !== this.sprites.runLeft.image)

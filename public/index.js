@@ -80,20 +80,20 @@ const player = new Fighter({
         },
         attack1Left: {
             imgSrc: '../assets/naruto/attack1-left.png',
-            framesMax: 5,
+            framesMax: 7,
             framesHold: 8,
             offset: {
-                x: 120,
-                y: 0,
+                x: 166,
+                y: 84,
             }
         },
         attack1: {
             imgSrc: '../assets/naruto/attack1.png',
-            framesMax: 5,
+            framesMax: 7,
             framesHold: 8,
             offset: {
-                x: 10,
-                y: 0,
+                x: 40,
+                y: 84,
             }
         },
     },
@@ -339,7 +339,8 @@ window.addEventListener('keydown', (e) => {
             player.lastKey = 'a';
         break
         case 'w':
-            player.velocity.y = -15;
+            if (player.position.y > 270)
+            player.velocity.y = -20;
         break
         case ' ':
             player.attack();
@@ -353,7 +354,8 @@ window.addEventListener('keydown', (e) => {
             enemy.lastKey = 'ArrowLeft';
         break
         case 'ArrowUp':
-            enemy.velocity.y = -15;
+            if (enemy.position.y > 270)
+            enemy.velocity.y = -20;
         break
         case 'Shift':
             enemy.attack();
