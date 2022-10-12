@@ -49,7 +49,8 @@ class Fighter extends Sprite {
         framesMax = 1, 
         offset = {x: 0, y: 0},
         sprites,
-        hitBox = { offset: {}, width: undefined, height: undefined}
+        hitBox = { offset: {}, width: undefined, height: undefined},
+        lastKey
     }) {
         super ({
             position,
@@ -61,7 +62,7 @@ class Fighter extends Sprite {
         this.velocity = velocity;
         this.height = 150;
         this.width = 50;
-        this.lastKey;
+        this.lastKey = lastKey;
         this.lastUpKey;
         this.hitBox = {
             position: {
@@ -90,16 +91,14 @@ class Fighter extends Sprite {
         c.fillRect(this.position.x, this.position.y, 50, 150)
         this.draw();
         this.animateFrames();
+        console.log(enemy.lastKey)
 
-        c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height)
+        c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height);
         if (this.lastKey === 'd') {
             this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
             this.hitBox.position.y = this.position.y;
         } else if (this.lastKey === 'a') {
-            this.hitBox.position.x = this.position.x - this.hitBox.offset.x + this.width + 18;
-            this.hitBox.position.y = this.position.y;
-        } else {
-            this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
+            this.hitBox.position.x = this.position.x - 162;
             this.hitBox.position.y = this.position.y;
         };
 
@@ -107,10 +106,7 @@ class Fighter extends Sprite {
             this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
             this.hitBox.position.y = this.position.y;
         } else if (this.lastKey === 'ArrowRight') {
-            this.hitBox.position.x = this.position.x - this.hitBox.offset.x + this.width - 155;
-            this.hitBox.position.y = this.position.y;
-        } else {
-            this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
+            this.hitBox.position.x = this.position.x - this.hitBox.offset.x + this.width - 83;
             this.hitBox.position.y = this.position.y;
         };
 
@@ -126,7 +122,7 @@ class Fighter extends Sprite {
         }
     };
 
-    playerAttack() {
+    attack() {
         if (this.lastKey === 'a') {
             this.switchSprite('attack1Left')
         } else if (this.lastKey === 'd') {
@@ -135,18 +131,11 @@ class Fighter extends Sprite {
             this.switchSprite('attack1')
         };
 
-        this.isAttacking = true;
-        setTimeout(() => {
-            this.isAttacking = false;
-        }, 100);
-    };
-
-    enemyAttack() {
         if (this.lastKey === 'ArrowRight') {
             this.switchSprite('attack1')
         } else if (this.lastKey === 'ArrowLeft') {
             this.switchSprite('attack1Left')
-        } else if (!this.lastKey) {
+        } else if (this.lastKey === undefined) {
             this.switchSprite('attack1Left')
         };
 
@@ -199,6 +188,7 @@ class Fighter extends Sprite {
                 this.image = this.sprites.attack1.image;
                 this.framesMax = this.sprites.attack1.framesMax;
                 this.offset.y = this.sprites.attack1.offset.y;
+                this.offset.x = this.sprites.attack1.offset.x;
             break;
             case "idleLeft":
                 if (this.image !== this.sprites.idleLeft.image)

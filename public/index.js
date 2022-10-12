@@ -29,11 +29,12 @@ const player = new Fighter({
         x: 0,
         y: 10,
     },
+    lastKey: 'd',
     imgSrc: '../assets/naruto/naruto-idle.png',
     framesMax: 4,
     scale: 2.5,
     offset: {
-        x: -150,
+        x: 80,
         y: 0,
     },
     sprites: {
@@ -41,7 +42,7 @@ const player = new Fighter({
             imgSrc: '../assets/naruto/naruto-idle.png',
             framesMax: 4,
             offset: {
-                x: -150,
+                x: 70,
                 y: 0,
             },
         },
@@ -49,7 +50,7 @@ const player = new Fighter({
             imgSrc: '../assets/naruto/naruto-idle-left.png',
             framesMax: 4,
             offset: {
-                x: 0,
+                x: 50,
                 y: 0,
             },
         },
@@ -57,7 +58,7 @@ const player = new Fighter({
             imgSrc: '../assets/naruto/naruto-run.png',
             framesMax: 6,
             offset: {
-                x: 0,
+                x: 60,
                 y: 0,
             }
         },
@@ -82,7 +83,7 @@ const player = new Fighter({
             framesMax: 5,
             framesHold: 8,
             offset: {
-                x: 0,
+                x: 120,
                 y: 0,
             }
         },
@@ -91,14 +92,14 @@ const player = new Fighter({
             framesMax: 5,
             framesHold: 8,
             offset: {
-                x: 0,
+                x: 10,
                 y: 0,
             }
         },
     },
     hitBox: {
         offset: {
-            x: 100,
+            x: 95,
             y: 0,
         },
         width: 100,
@@ -116,15 +117,12 @@ const enemy = new Fighter({
         y: 0,
     },
     color: 'blue',
-    offset: {
-        x: -50,
-        y: 0,
-    },
     imgSrc: '../assets/sasuke/sasuke-idle-left.png',
     framesMax: 4,
     scale: 2.5,
+    lastKey: 'ArrowLeft',
     offset: {
-        x: 80,
+        x: 10,
         y: 0,
     },
     sprites: {
@@ -132,7 +130,7 @@ const enemy = new Fighter({
             imgSrc: '../assets/sasuke/sasuke-idle-left.png',
             framesMax: 6,
             offset: {
-                x: 80,
+                x: 10,
                 y: 0,
             },
         },
@@ -182,14 +180,14 @@ const enemy = new Fighter({
             framesMax: 4,
             framesHold: 8,
             offset: {
-                x: 140,
+                x: 145,
                 y: 0,
             }
         },
     },
     hitBox: {
         offset: {
-            x: -135,
+            x: -145,
             y: 0,
         },
         width: 100,
@@ -344,7 +342,7 @@ window.addEventListener('keydown', (e) => {
             player.velocity.y = -15;
         break
         case ' ':
-            player.playerAttack();
+            player.attack();
          break
         case 'ArrowRight':
             keys.ArrowRight.pressed = true;
@@ -358,7 +356,7 @@ window.addEventListener('keydown', (e) => {
             enemy.velocity.y = -15;
         break
         case 'Shift':
-            enemy.enemyAttack();
+            enemy.attack();
          break
     }
 
