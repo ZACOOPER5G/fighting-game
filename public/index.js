@@ -31,7 +31,6 @@ const player = new Fighter({
     },
     lastKey: 'd',
     imgSrc: '../assets/naruto/naruto-idle.png',
-    framesMax: 4,
     scale: 2.5,
     offset: {
         x: 80,
@@ -100,7 +99,7 @@ const player = new Fighter({
     hitBox: {
         offset: {
             x: 95,
-            y: 0,
+            y: 60,
         },
         width: 100,
         height: 50,
@@ -188,7 +187,7 @@ const enemy = new Fighter({
     hitBox: {
         offset: {
             x: -145,
-            y: 0,
+            y: 60,
         },
         width: 100,
         height: 50,
@@ -304,7 +303,7 @@ const animate = () => {
             rectangle1: player,
             rectangle2: enemy
         }) &&
-        player.isAttacking
+        player.isAttacking && player.framesCurrent === 5
 
     ) {
         player.isAttacking = false;
@@ -312,18 +311,24 @@ const animate = () => {
         document.querySelector("#enemyHealth").style.width = enemy.health + '%'
     };
 
+    // if player misses
+    if (player.isAttacking && player.framesCurrent === 5) player.isAttacking = false;
+
     if (
         rectangularCollision({
             rectangle1: enemy,
             rectangle2: player
         }) &&
-        enemy.isAttacking
+        enemy.isAttacking && enemy.framesCurrent === 2
 
     ) {
         enemy.isAttacking = false;
-        player.health -= 20;
+        player.health -= 10;
         document.querySelector("#playerHealth").style.width = player.health + '%'
     }
+
+   // if enemy misses
+   if (enemy.isAttacking && enemy.framesCurrent === 2) enemy.isAttacking = false;
 };
 
 animate();

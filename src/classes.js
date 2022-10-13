@@ -95,18 +95,18 @@ class Fighter extends Sprite {
         // c.fillRect(this.hitBox.position.x, this.hitBox.position.y, this.hitBox.width, this.hitBox.height);
         if (this.lastKey === 'd') {
             this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
-            this.hitBox.position.y = this.position.y;
+            this.hitBox.position.y = this.position.y + this.hitBox.offset.y;
         } else if (this.lastKey === 'a') {
             this.hitBox.position.x = this.position.x - 162;
-            this.hitBox.position.y = this.position.y;
+            this.hitBox.position.y = this.position.y + this.hitBox.offset.y;
         };
 
         if (this.lastKey === 'ArrowLeft') {
             this.hitBox.position.x = this.position.x + this.hitBox.offset.x;
-            this.hitBox.position.y = this.position.y;
+            this.hitBox.position.y = this.position.y + this.hitBox.offset.y;
         } else if (this.lastKey === 'ArrowRight') {
             this.hitBox.position.x = this.position.x - this.hitBox.offset.x + this.width - 83;
-            this.hitBox.position.y = this.position.y;
+            this.hitBox.position.y = this.position.y + this.hitBox.offset.y;
         };
 
         this.position.x += this.velocity.x;
@@ -139,9 +139,6 @@ class Fighter extends Sprite {
         };
 
         this.isAttacking = true;
-        setTimeout(() => {
-            this.isAttacking = false;
-        }, 100);
     };
 
     switchSprite(sprite) {
