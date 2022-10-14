@@ -115,8 +115,8 @@ const player = new Fighter({
             imgSrc: '../assets/naruto/death.png',
             framesMax: 6,
             offset: {
-                x: 0,
-                y: 0,
+                x: 100,
+                y: 20,
             }
         },
         deathLeft: {
@@ -124,7 +124,7 @@ const player = new Fighter({
             framesMax: 6,
             offset: {
                 x: 0,
-                y: 0,
+                y: 20,
             }
         },
     },
@@ -236,8 +236,8 @@ const enemy = new Fighter({
             imgSrc: '../assets/sasuke/death.png',
             framesMax: 6,
             offset: {
-                x: 0,
-                y: 0,
+                x: 130,
+                y: 30,
             }
         },
         deathLeft: {
@@ -245,7 +245,7 @@ const enemy = new Fighter({
             framesMax: 6,
             offset: {
                 x: 0,
-                y: 0,
+                y: 30,
             }
         }
     },
@@ -418,7 +418,8 @@ window.addEventListener('keydown', (e) => {
                 player.attack();
             break
         }
-    }
+    };
+
     if (!enemy.dead && timer > 0) {
         switch(e.key) {
             case 'ArrowRight':
@@ -437,8 +438,7 @@ window.addEventListener('keydown', (e) => {
                 enemy.attack();
             break
         }
-    }
-
+    };
 });
 
 window.addEventListener('keyup', (e) => {
