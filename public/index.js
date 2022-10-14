@@ -17,7 +17,7 @@ const background = new Sprite ({
         x: 0,
         y: 0,
     },
-    imgSrc: '../assets/background.jpg'
+    imgSrc: './assets/background.jpg'
 })
 
 const player = new Fighter({
@@ -30,7 +30,7 @@ const player = new Fighter({
         y: 10,
     },
     lastKey: 'd',
-    imgSrc: '../assets/naruto/naruto-idle.png',
+    imgSrc: './assets/naruto/naruto-idle.png',
     scale: 2.5,
     offset: {
         x: 80,
@@ -38,7 +38,7 @@ const player = new Fighter({
     },
     sprites: {
         idle: {
-            imgSrc: '../assets/naruto/naruto-idle.png',
+            imgSrc: './assets/naruto/naruto-idle.png',
             framesMax: 4,
             offset: {
                 x: 70,
@@ -46,7 +46,7 @@ const player = new Fighter({
             },
         },
         idleLeft: {
-            imgSrc: '../assets/naruto/naruto-idle-left.png',
+            imgSrc: './assets/naruto/naruto-idle-left.png',
             framesMax: 4,
             offset: {
                 x: 50,
@@ -54,7 +54,7 @@ const player = new Fighter({
             },
         },
         run: {
-            imgSrc: '../assets/naruto/naruto-run.png',
+            imgSrc: './assets/naruto/naruto-run.png',
             framesMax: 6,
             offset: {
                 x: 60,
@@ -62,7 +62,7 @@ const player = new Fighter({
             }
         },
         runLeft: {
-            imgSrc: '../assets/naruto/naruto-run-left.png',
+            imgSrc: './assets/naruto/naruto-run-left.png',
             framesMax: 6,
             offset: {
                 x: 0,
@@ -70,15 +70,15 @@ const player = new Fighter({
             }
         },
         jump: {
-            imgSrc: '../assets/naruto/naruto-jump.png',
+            imgSrc: './assets/naruto/naruto-jump.png',
             framesMax: 3,
         },
         jumpLeft: {
-            imgSrc: '../assets/naruto/naruto-jump-left.png',
+            imgSrc: './assets/naruto/naruto-jump-left.png',
             framesMax: 3,
         },
         attack1Left: {
-            imgSrc: '../assets/naruto/attack1-left.png',
+            imgSrc: './assets/naruto/attack1-left.png',
             framesMax: 7,
             framesHold: 8,
             offset: {
@@ -87,7 +87,7 @@ const player = new Fighter({
             }
         },
         attack1: {
-            imgSrc: '../assets/naruto/attack1.png',
+            imgSrc: './assets/naruto/attack1.png',
             framesMax: 7,
             framesHold: 8,
             offset: {
@@ -96,7 +96,7 @@ const player = new Fighter({
             }
         },
         takeHit: {
-            imgSrc: '../assets/naruto/take-hit.png',
+            imgSrc: './assets/naruto/take-hit.png',
             framesMax: 2,
             offset: {
                 x: 80,
@@ -104,7 +104,7 @@ const player = new Fighter({
             }
         },
         takeHitLeft: {
-            imgSrc: '../assets/naruto/take-hit-left.png',
+            imgSrc: './assets/naruto/take-hit-left.png',
             framesMax: 2,
             offset: {
                 x: 0,
@@ -112,7 +112,7 @@ const player = new Fighter({
             }
         },
         death: {
-            imgSrc: '../assets/naruto/death.png',
+            imgSrc: './assets/naruto/death.png',
             framesMax: 6,
             offset: {
                 x: 100,
@@ -120,7 +120,7 @@ const player = new Fighter({
             }
         },
         deathLeft: {
-            imgSrc: '../assets/naruto/death-left.png',
+            imgSrc: './assets/naruto/death-left.png',
             framesMax: 6,
             offset: {
                 x: 0,
@@ -149,7 +149,7 @@ const enemy = new Fighter({
         y: 0,
     },
     color: 'blue',
-    imgSrc: '../assets/sasuke/sasuke-idle-left.png',
+    imgSrc: './assets/sasuke/sasuke-idle-left.png',
     framesMax: 4,
     scale: 2.5,
     lastKey: 'ArrowLeft',
@@ -159,7 +159,7 @@ const enemy = new Fighter({
     },
     sprites: {
         idleLeft: {
-            imgSrc: '../assets/sasuke/sasuke-idle-left.png',
+            imgSrc: './assets/sasuke/sasuke-idle-left.png',
             framesMax: 6,
             offset: {
                 x: 10,
@@ -167,7 +167,7 @@ const enemy = new Fighter({
             },
         },
         idle: {
-            imgSrc: '../assets/sasuke/sasuke-idle.png',
+            imgSrc: './assets/sasuke/sasuke-idle.png',
             framesMax: 6,
             offset: {
                 x: 80,
@@ -175,7 +175,7 @@ const enemy = new Fighter({
             },
         },
         runLeft: {
-            imgSrc: '../assets/sasuke/sasuke-run-left.png',
+            imgSrc: './assets/sasuke/sasuke-run-left.png',
             framesMax: 6,
             offset: {
                 x: 0,
@@ -183,7 +183,7 @@ const enemy = new Fighter({
             }
         },
         run: {
-            imgSrc: '../assets/sasuke/sasuke-run.png',
+            imgSrc: './assets/sasuke/sasuke-run.png',
             framesMax: 6,
             offset: {
                 x: 0,
@@ -191,15 +191,15 @@ const enemy = new Fighter({
             }
         },
         jumpLeft: {
-            imgSrc: '../assets/sasuke/sasuke-jump-left.png',
+            imgSrc: './assets/sasuke/sasuke-jump-left.png',
             framesMax: 3,
         },
         jump: {
-            imgSrc: '../assets/sasuke/sasuke-jump.png',
+            imgSrc: './assets/sasuke/sasuke-jump.png',
             framesMax: 3,
         },
         attack1: {
-            imgSrc: '../assets/sasuke/attack1.png',
+            imgSrc: './assets/sasuke/attack1.png',
             framesMax: 4,
             framesHold: 8,
             offset: {
@@ -208,7 +208,7 @@ const enemy = new Fighter({
             }
         },
         attack1Left: {
-            imgSrc: '../assets/sasuke/attack1-left.png',
+            imgSrc: './assets/sasuke/attack1-left.png',
             framesMax: 4,
             framesHold: 8,
             offset: {
@@ -217,7 +217,7 @@ const enemy = new Fighter({
             }
         },
         takeHit: {
-            imgSrc: '../assets/sasuke/take-hit.png',
+            imgSrc: './assets/sasuke/take-hit.png',
             framesMax: 3,
             offset: {
                 x: 80,
@@ -225,7 +225,7 @@ const enemy = new Fighter({
             }
         },
         takeHitLeft: {
-            imgSrc: '../assets/sasuke/take-hit-left.png',
+            imgSrc: './assets/sasuke/take-hit-left.png',
             framesMax: 3,
             offset: {
                 x: 0,
@@ -233,7 +233,7 @@ const enemy = new Fighter({
             }
         },
         death: {
-            imgSrc: '../assets/sasuke/death.png',
+            imgSrc: './assets/sasuke/death.png',
             framesMax: 6,
             offset: {
                 x: 130,
@@ -241,7 +241,7 @@ const enemy = new Fighter({
             }
         },
         deathLeft: {
-            imgSrc: '../assets/sasuke/death-left.png',
+            imgSrc: './assets/sasuke/death-left.png',
             framesMax: 6,
             offset: {
                 x: 0,
