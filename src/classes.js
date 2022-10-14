@@ -50,7 +50,8 @@ class Fighter extends Sprite {
         offset = {x: 0, y: 0},
         sprites,
         hitBox = { offset: {}, width: undefined, height: undefined},
-        lastKey
+        lastKey,
+        healthTaken
     }) {
         super ({
             position,
@@ -62,6 +63,7 @@ class Fighter extends Sprite {
         this.velocity = velocity;
         this.height = 150;
         this.width = 50;
+        this.healthTaken = healthTaken;
         this.lastKey = lastKey;
         this.lastUpKey;
         this.hitBox = {
@@ -141,7 +143,28 @@ class Fighter extends Sprite {
         this.isAttacking = true;
     };
 
+    takeHit() {
+        if (this.lastKey === 'a') {
+            this.switchSprite('takeHitLeft')
+        } else if (this.lastKey === 'd') {
+            this.switchSprite('takeHit')
+        } else if (!this.lastKey) {
+            this.switchSprite('takeHit')
+        };
+
+                if (this.lastKey === 'ArrowRight') {
+            this.switchSprite('takeHit')
+        } else if (this.lastKey === 'ArrowLeft') {
+            this.switchSprite('takeHitLeft')
+        } else if (this.lastKey === undefined) {
+            this.switchSprite('takeHitLeft')
+        };
+
+        this.health -= this.healthTaken;
+    }
+
     switchSprite(sprite) {
+        // conditionals to override all other animations while attacking
         if ( 
                 this.image === this.sprites.attack1Left.image && this.framesCurrent < this.sprites.attack1Left.framesMax - 1 
             ) return;
@@ -149,6 +172,11 @@ class Fighter extends Sprite {
         if ( 
                 this.image === this.sprites.attack1.image && this.framesCurrent < this.sprites.attack1.framesMax - 1 
             ) return;
+
+        // conditionals to override all other animations while being attacked
+        if (this.image === this.sprites.takeHit.image && this.framesCurrent < this.sprites.takeHit.framesMax - 1) return;
+
+        if (this.image === this.sprites.takeHitLeft.image && this.framesCurrent < this.sprites.takeHitLeft.framesMax - 1) return;
 
         switch (sprite) {
             case "idle":
@@ -220,6 +248,22 @@ class Fighter extends Sprite {
                 this.framesHold = this.sprites.attack1Left.framesHold;
                 this.framesMax = this.sprites.attack1Left.framesMax;
                 this.offset.y = this.sprites.attack1Left.offset.y;
+            break;
+            case "takeHit":
+                if (this.image !== this.sprites.takeHit.image)
+                this.image = this.sprites.takeHit.image;
+                this.offset.x = this.sprites.takeHit.offset.x;
+                this.framesCurrent = 0;
+                this.framesMax = this.sprites.takeHit.framesMax;
+                this.offset.y = this.sprites.takeHit.offset.y;
+            break;
+            case "takeHitLeft":
+                if (this.image !== this.sprites.takeHitLeft.image)
+                this.image = this.sprites.takeHitLeft.image;
+                this.offset.x = this.sprites.takeHitLeft.offset.x;
+                this.framesCurrent = 0;
+                this.framesMax = this.sprites.takeHitLeft.framesMax;
+                this.offset.y = this.sprites.takeHitLeft.offset.y;
             break;
         }
     }

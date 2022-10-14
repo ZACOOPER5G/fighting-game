@@ -95,6 +95,22 @@ const player = new Fighter({
                 y: 84,
             }
         },
+        takeHit: {
+            imgSrc: '../assets/naruto/take-hit.png',
+            framesMax: 2,
+            offset: {
+                x: 80,
+                y: 15,
+            }
+        },
+        takeHitLeft: {
+            imgSrc: '../assets/naruto/take-hit-left.png',
+            framesMax: 2,
+            offset: {
+                x: 0,
+                y: 15,
+            }
+        },
     },
     hitBox: {
         offset: {
@@ -104,6 +120,7 @@ const player = new Fighter({
         width: 100,
         height: 50,
     },
+    healthTaken: 10,
 });
 
 const enemy = new Fighter({
@@ -183,7 +200,24 @@ const enemy = new Fighter({
                 y: 0,
             }
         },
+        takeHit: {
+            imgSrc: '../assets/sasuke/take-hit.png',
+            framesMax: 3,
+            offset: {
+                x: 80,
+                y: 0,
+            }
+        },
+        takeHitLeft: {
+            imgSrc: '../assets/sasuke/take-hit-left.png',
+            framesMax: 3,
+            offset: {
+                x: 0,
+                y: 0,
+            }
+        },
     },
+    healthTaken: 20,
     hitBox: {
         offset: {
             x: -145,
@@ -297,7 +331,7 @@ const animate = () => {
         };
     };
 
-    // detect for collison
+    // detect for collison & enemy gets hit
     if (
         rectangularCollision({
             rectangle1: player,
@@ -306,8 +340,8 @@ const animate = () => {
         player.isAttacking && player.framesCurrent === 5
 
     ) {
+        enemy.takeHit()
         player.isAttacking = false;
-        enemy.health -= 20;
         document.querySelector("#enemyHealth").style.width = enemy.health + '%'
     };
 
@@ -322,8 +356,8 @@ const animate = () => {
         enemy.isAttacking && enemy.framesCurrent === 2
 
     ) {
+        player.takeHit()
         enemy.isAttacking = false;
-        player.health -= 10;
         document.querySelector("#playerHealth").style.width = player.health + '%'
     }
 
