@@ -145,6 +145,8 @@ class Fighter extends Sprite {
     };
 
     takeHit() {
+        this.health -= this.healthTaken;
+
         if (this.lastKey === 'a') {
             if (this.health < 1) this.switchSprite('deathLeft')
             else this.switchSprite('takeHitLeft')
@@ -166,8 +168,6 @@ class Fighter extends Sprite {
             if (this.health < 1) this.switchSprite('deathLeft')
             else this.switchSprite('takeHitLeft')
         };
-
-        this.health -= this.healthTaken;
     }
 
     switchSprite(sprite) {
